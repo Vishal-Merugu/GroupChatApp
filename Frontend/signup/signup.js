@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(response);
     
             if(response.status == 200){
-                alert("Account Created Successfully");   
+                alert("Account Created Successfully"); 
+                window.location.href = "../login/login.html"  
             } 
             else{
                 throw new Error("User Already Exists")

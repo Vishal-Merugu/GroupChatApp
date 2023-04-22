@@ -20,6 +20,7 @@ app.use('/user', userRoutes)
 
 sequelize
 .sync()
+// .sync({ force : true })
 .then(() => {
     app.listen(3000)
 })

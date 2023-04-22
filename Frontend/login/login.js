@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 const token = response.data.token;
                localStorage.setItem("token",token);
                alert("User Logged in successfully")
-               window.location.href = "../expense/index.html"
            }else{
                 throw new Error("Login Failed")
            }
