@@ -15,17 +15,36 @@ if(!token){
 
 async function showMessages(messages){
     
+    let chat = [] ;
     messages.forEach(message => {
-        
-        const div = document.createElement('div');
-        div.classList.add('mb-2');
-        div.innerHTML  = `
-        <span>${message.user.name} : </span>
-        <span >${message.message}</span>
-        `    
-        document.querySelector("#chat").appendChild(div)
+
+        if(message.user.id == localStorage.getItem('id')){
+            name = ""
+            msgclass = 'float-end'
+            msgcolor = "mymsgcolor"  
+        }
+        else{
+            name = message.user.name + ":"
+            msgclass = ""
+            msgcolor = "othermsgcolor"
+        } 
+
+        chat += `
+        <div class="mb-2 ${msgcolor}">
+            <div class = "container ms-0 ps-0">
+            <div class="row">
+                <div class="col p-2">
+                    <span id = "sendername" class = "${msgclass}">${name}</span>
+                    <span class = "${msgclass} p-2">${message.message}</span>
+                </div>
+            </div>
+            </div>
+        </div>
+        `
     });
 
+    console.log(chat);
+    document.querySelector("#chat").innerHTML = chat
 }
 
 
@@ -35,12 +54,17 @@ document.addEventListener("DOMContentLoaded",async () => {
         e.preventDefault();
         
         const message = Message.value ;
-        const response = await axios.post(`${url}/chat/message`, { message : message }, config)
-        // console.log(response);
+        if(message){
+            await axios.post(`${url}/chat/message`, { message : message }, config)
+            // console.log(response);
+            Message.value = ""
+        }
     }
 
-    const messages = await axios.get(`${url}/chat/messages`,config)
-    showMessages(messages.data)
+    window.setInterval(async () => {
+        const messages = await axios.get(`${url}/chat/messages`,config)
+        showMessages(messages.data);
+    },1000)
 
 
 })

@@ -50,7 +50,7 @@ exports.postLogin = async (req, res, next) => {
             bcrypt.compare(password, user.password, (err, result) => {
                 if(result){
                     const token = generateAccessToken(user.id,user.name )
-                    res.status(200).json({ message : "user found", token : token })
+                    res.status(200).json({ message : "user found", token : token, id : user.id })
                 }
                 else{
                     res.status(401).json({ message : "Incorrect Password !!" })

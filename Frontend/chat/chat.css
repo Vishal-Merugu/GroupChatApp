@@ -4,12 +4,31 @@
     box-sizing: border-box;
 }
 
-.chat .col-7{
+.mainmessagebody{
     padding: 10px;
     border: 2px solid black;
     margin-top: 2rem;
+    border-radius: 7px;
     background-color: #F5F5F5;
 }
 body{
     background-color: 	#F8F8F8;
+}
+
+.othermsgcolor span{
+    background-color:rgb(202, 233, 223);
+    border-radius: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.mymsgcolor span{
+    background-color:rgb(249, 231, 209);
+    border-radius: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#sendername{
+    color: black;
+    font-weight:500;
 }

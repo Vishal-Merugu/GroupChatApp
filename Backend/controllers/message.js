@@ -22,7 +22,7 @@ exports.getMessages = async (req, res, body) => {
     const messages = await Message.findAll({
         include: [{
           model: User,
-          attributes: ['name']
+          attributes: ['name', "id"]
         }],
         attributes: ['message']
       });

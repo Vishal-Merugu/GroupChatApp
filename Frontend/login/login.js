@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
            if(response.status == 200){
                 const token = response.data.token;
                localStorage.setItem("token",token);
+               localStorage.setItem("id", response.data.id)
                alert("User Logged in successfully")
                window.location.href = "../chat/chat.html"
            }else{
