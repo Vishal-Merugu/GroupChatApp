@@ -1,7 +1,9 @@
 const Message = require('../models/message');
 const User = require('../models/user')
 
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
+
+const { Op } = require('sequelize')
 
 exports.postMessage = async (req, res, next) => {
    try{
@@ -19,12 +21,19 @@ exports.postMessage = async (req, res, next) => {
 }
 
 exports.getMessages = async (req, res, body) => {
-    const messages = await Message.findAll({
-        include: [{
-          model: User,
-          attributes: ['name', "id"]
-        }],
-        attributes: ['message']
-      });
-    res.status(200).json(messages)
+  const lastMessageId = req.query.lastmessageid;
+  const messages = await Message.findAll({
+      include: [{
+        model: User,
+        attributes: ['name', "id"]
+      }],
+      attributes: ['message', "id"],
+      where : {
+        id : {
+          [Op.gt] : lastMessageId
+        }
+      }
+    });
+  res.status(200).json(messages)
 }
+

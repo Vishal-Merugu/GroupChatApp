@@ -61,8 +61,43 @@ document.addEventListener("DOMContentLoaded",async () => {
     }
 
     window.setInterval(async () => {
-        const messages = await axios.get(`${url}/chat/messages`,config)
-        showMessages(messages.data);
+
+        let oldMessages = localStorage.getItem("oldmessages");
+
+        if(!oldMessages){
+            lastMessageId = -1;
+        }
+        else{
+            
+            oldMessages = JSON.parse(localStorage.getItem("oldmessages"))
+            lastMessageId = +oldMessages[oldMessages.length - 1].id
+            // console.log(lastMessageId);
+        }
+
+        const newMessages = await axios.get(`${url}/chat/messages?lastmessageid=${lastMessageId}`,config)
+
+        if(lastMessageId == -1){
+            const oldMessages = JSON.stringify(newMessages.data);
+            localStorage.setItem("oldmessages", oldMessages)
+        }
+        else if(newMessages.data.length > 0) {
+
+            const oldMessages = JSON.parse(localStorage.getItem("oldmessages"))
+
+            const concatMessages = oldMessages.concat(newMessages.data);
+
+            let slicedMessages ;
+            if(concatMessages.length > 15){
+                slicedMessages = concatMessages.slice(-15);
+            }
+
+            localStorage.setItem("oldmessages",JSON.stringify(slicedMessages))
+            
+        }
+
+        messagesToShow = JSON.parse(localStorage.getItem("oldmessages"))
+
+        showMessages(messagesToShow);
     },1000)
 
 
