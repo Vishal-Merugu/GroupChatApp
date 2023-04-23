@@ -3,3 +3,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.chat .col-7{
+    padding: 10px;
+    border: 2px solid black;
+    margin-top: 2rem;
+    background-color: #F5F5F5;
+}
+body{
+    background-color: 	#F8F8F8;
+}

@@ -5,6 +5,10 @@ const cors = require('cors')
 const sequelize = require('./util/database');
 
 const userRoutes = require('./routes/user');
+const chatRoutes = require('./routes/message')
+
+const User = require('./models/user');
+const Message = require('./models/message');
 
 const app = express();
 
@@ -17,6 +21,10 @@ app.use(cors({
 }))
 
 app.use('/user', userRoutes)
+app.use('/chat',chatRoutes)
+
+User.hasMany(Message)
+Message.belongsTo(User)
 
 sequelize
 .sync()
