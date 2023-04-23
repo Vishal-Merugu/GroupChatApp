@@ -33,8 +33,8 @@ async function showMessages(messages){
         <div class="mb-2 ${msgcolor}">
             <div class = "container ms-0 ps-0">
             <div class="row">
-                <div class="col p-2">
-                    <span id = "sendername" class = "${msgclass}">${name}</span>
+                <div class="col mt-1 mb-1">
+                    <span id = "sendername" class = "${msgclass} ps-1 pe-1 text-center">${name}</span>
                     <span class = "${msgclass} p-2">${message.message}</span>
                 </div>
             </div>
@@ -43,7 +43,6 @@ async function showMessages(messages){
         `
     });
 
-    console.log(chat);
     document.querySelector("#chat").innerHTML = chat
 }
 
@@ -65,6 +64,13 @@ document.addEventListener("DOMContentLoaded",async () => {
         const messages = await axios.get(`${url}/chat/messages`,config)
         showMessages(messages.data);
     },1000)
+
+
+    document.querySelector("#logout").onclick = () => {
+        localStorage.removeItem('id');
+        localStorage.removeItem("token")
+        window.location.href = "../login/login.html"
+    }
 
 
 })

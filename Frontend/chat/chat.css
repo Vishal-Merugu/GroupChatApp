@@ -18,17 +18,20 @@ body{
 .othermsgcolor span{
     background-color:rgb(202, 233, 223);
     border-radius: 13px;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
 }
 .mymsgcolor span{
     background-color:rgb(249, 231, 209);
     border-radius: 13px;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
 }
 
 #sendername{
     color: black;
     font-weight:500;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.90rem;
+    text-align: center;
 }
