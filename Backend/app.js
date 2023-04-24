@@ -7,10 +7,14 @@ const sequelize = require('./util/database');
 const userRoutes = require('./routes/user');
 const chatRoutes = require('./routes/message');
 const passwordRoutes = require("./routes/password");
+const groupRoutes = require("./routes/group");
 
 const User = require('./models/user');
 const Message = require('./models/message');
 const ForgotPasswordRequest = require("./models/forgotpasswords");
+const Group = require("./models/group");
+const UserGroup = require("./models/usergroup");
+
 
 const app = express();
 
@@ -24,12 +28,19 @@ app.use(cors({
 
 app.use('/user', userRoutes);
 app.use('/chat',chatRoutes);
-app.use("/password", passwordRoutes)
+app.use("/password", passwordRoutes);
+app.use('/groups', groupRoutes);
 
 User.hasMany(Message);
 Message.belongsTo(User);
 User.hasMany(ForgotPasswordRequest);
-ForgotPasswordRequest.belongsTo(User)
+ForgotPasswordRequest.belongsTo(User);
+User.belongsToMany(Group, { through : UserGroup });
+Group.belongsToMany(User, {through: UserGroup });
+Group.hasMany(Message);
+Message.belongsTo(Group);
+Group.hasOne(UserGroup)
+
 
 sequelize
 .sync()

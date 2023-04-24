@@ -20,7 +20,6 @@ exports.postSignUp = async (req, res, next) => {
         else{
             bcrypt.hash(password, saltRounds, async (err, hash) => {
                 const user = await User.create({
-                    id : uuuidv4(),
                     name : name,
                     email : email,
                     phone : phone,

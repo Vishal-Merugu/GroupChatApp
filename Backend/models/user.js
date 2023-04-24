@@ -4,9 +4,10 @@ const sequelize = require('../util/database');
 
 const User = sequelize.define('users',{
     id : {
-        type : Sequelize.STRING,
+        type : Sequelize.INTEGER,
         allowNull : false,
-        primaryKey : true
+        primaryKey : true,
+        autoIncrement : true
     },
     name : {
         type : Sequelize.STRING,

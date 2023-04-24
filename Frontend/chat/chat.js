@@ -1,13 +1,4 @@
-const url = "http://localhost:3000"
-
-const token = localStorage.getItem('token')
-const config = {
-    headers : {
-        Authorization : token
-    }
-}
-
-const Message = document.querySelector('#message')
+const Message = document.querySelector('#message');
 
 if(!token){
     document.querySelector('body').innerHTML = "<h1 class = 'text-center'>Login First<h1>"
@@ -35,7 +26,7 @@ async function showMessages(messages){
             <div class="row">
                 <div class="col mt-1 mb-1">
                     <span id = "sendername" class = "${msgclass} ps-1 pe-1 text-center">${name}</span>
-                    <span class = "${msgclass} p-2">${message.message}</span>
+                    <span class = "${msgclass} p-2" autofocus>${message.message}</span>
                 </div>
             </div>
             </div>
@@ -47,24 +38,19 @@ async function showMessages(messages){
 }
 
 
+let msgInterval;
+function getMessages (groupId){
 
-document.addEventListener("DOMContentLoaded",async () => {
-    document.querySelector("#messageform").onsubmit = async (e) => {
-        e.preventDefault();
-        
-        const message = Message.value ;
-        if(message){
-            await axios.post(`${url}/chat/message`, { message : message }, config)
-            // console.log(response);
-            Message.value = ""
-        }
+    localStorage.setItem("groupid",groupId)
+    
+    if(msgInterval){
+        clearInterval(msgInterval)
     }
 
-    window.setInterval(async () => {
+    msgInterval =  setInterval(async () => {
 
         let oldMessages = localStorage.getItem("oldmessages");
-
-        if(!oldMessages){
+        if(oldMessages != undefined || JSON.parse(oldMessages).length == 0 ){
             lastMessageId = -1;
         }
         else{
@@ -74,10 +60,10 @@ document.addEventListener("DOMContentLoaded",async () => {
             // console.log(lastMessageId);
         }
 
-        const newMessages = await axios.get(`${url}/chat/messages?lastmessageid=${lastMessageId}`,config)
+        const newMessages = await axios.get(`${url}/chat/messages?lastmessageid=${lastMessageId}&groupid=${groupId}`,config)
 
         if(lastMessageId == -1){
-            const oldMessages = JSON.stringify(newMessages.data);
+            const oldMessages = JSON.stringify(newMessages.data.slice(-15));
             localStorage.setItem("oldmessages", oldMessages)
         }
         else if(newMessages.data.length > 0) {
@@ -100,12 +86,28 @@ document.addEventListener("DOMContentLoaded",async () => {
         showMessages(messagesToShow);
     },1000)
 
+}
+
+document.addEventListener("DOMContentLoaded",async () => {
+    document.querySelector("#messageform").onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const message = Message.value ;
+        if(message){
+            const groupId = localStorage.getItem('groupid')
+            await axios.post(`${url}/chat/message?groupid=${groupId}`, { message : message }, config)
+            Message.value = ""
+        }
+    }
+
+
+
+
 
     document.querySelector("#logout").onclick = () => {
         localStorage.removeItem('id');
         localStorage.removeItem("token")
         window.location.href = "../login/login.html"
     }
-
-
 })
+

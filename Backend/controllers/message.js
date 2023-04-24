@@ -9,9 +9,11 @@ exports.postMessage = async (req, res, next) => {
    try{
     const user = req.user;
     const message  = req.body.message;
+    const groupId = req.query.groupid;
 
     await user.createMessage({
-        message : message
+        message : message,
+        groupId : groupId
     })
     res.status(200).json({ success : true })
    }
@@ -22,6 +24,7 @@ exports.postMessage = async (req, res, next) => {
 
 exports.getMessages = async (req, res, body) => {
   const lastMessageId = req.query.lastmessageid;
+  const groupId = req.query.groupid;
   const messages = await Message.findAll({
       include: [{
         model: User,
@@ -31,7 +34,8 @@ exports.getMessages = async (req, res, body) => {
       where : {
         id : {
           [Op.gt] : lastMessageId
-        }
+        },
+        groupId : groupId
       }
     });
   res.status(200).json(messages)
