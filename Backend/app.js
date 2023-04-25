@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 
 const sequelize = require('./util/database');
-
+const helmet = require('helmet');
 const userRoutes = require('./routes/user');
 const chatRoutes = require('./routes/message');
 const passwordRoutes = require("./routes/password");
