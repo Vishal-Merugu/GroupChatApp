@@ -47,7 +47,7 @@ exports.postForgotPassword = async(req, res, next) => {
             sender,
             to : recievers,
             subject : "Reset Your Password",
-            htmlContent : `<html><p>Click <a href = "http://localhost:3000/password/resetpassword/{{params.uuid}}">  here </a> to reset to password</p></html>`,
+            htmlContent : `<html><p>Click <a href = "http://44.201.228.229:3000/password/resetpassword/{{params.uuid}}">  here </a> to reset to password</p></html>`,
             params : {
                 uuid : uuid
             }

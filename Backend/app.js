@@ -31,6 +31,13 @@ app.use('/chat',chatRoutes);
 app.use("/password", passwordRoutes);
 app.use('/groups', groupRoutes);
 
+app.use((req,res) => {
+    const url = req.url
+    res.header('Content-Security-Policy', "img-src 'self'");
+    res.sendFile(path.join(__dirname, `public/${url}`))
+})
+
+
 User.hasMany(Message);
 Message.belongsTo(User);
 User.hasMany(ForgotPasswordRequest);

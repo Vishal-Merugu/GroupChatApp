@@ -1,4 +1,4 @@
-const url = "http://localhost:3000"
+const url = "http://44.201.228.229:3000"
 
 const Email = document.querySelector("#email");
 const Password =  document.querySelector("#password");
