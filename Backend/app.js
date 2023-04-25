@@ -40,6 +40,7 @@ Group.belongsToMany(User, {through: UserGroup });
 Group.hasMany(Message);
 Message.belongsTo(Group);
 Group.hasOne(UserGroup)
+User.hasOne(UserGroup)
 
 
 sequelize

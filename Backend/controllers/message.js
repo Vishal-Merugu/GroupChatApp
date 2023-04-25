@@ -10,6 +10,7 @@ exports.postMessage = async (req, res, next) => {
     const user = req.user;
     const message  = req.body.message;
     const groupId = req.query.groupid;
+    console.log(groupId);
 
     await user.createMessage({
         message : message,
