@@ -1,4 +1,6 @@
 const Message = document.querySelector('#message');
+const f = document.querySelector("#file");
+const FileUploadPercentage = document.querySelector("#percentage")
 
 if(!token){
     document.querySelector('body').innerHTML = "<h1 class = 'text-center'>Login First<h1>"
@@ -93,10 +95,44 @@ document.addEventListener("DOMContentLoaded",async () => {
         e.preventDefault();
         
         const message = Message.value ;
+        const fName = f.value;
+
         if(message){
             const groupId = localStorage.getItem('groupid')
             await axios.post(`${url}/chat/message?groupid=${groupId}`, { message : message }, config)
             Message.value = ""
+        }
+
+        if(fName){
+
+            const fileReader = new FileReader();
+            const theFile = f.files[0];
+            fileReader.onload = async ev => {
+
+                const CHUNK_SIZE = 500;
+                const chunkCount = ev.target.result.byteLength/CHUNK_SIZE
+
+                console.log('Read successfullt');
+                const fileName = theFile.name ;
+                for (let chunkId = 0;chunkId < chunkCount + 1 ; chunkId ++ ){
+                    const chunk = ev.target.result.slice(chunkId * CHUNK_SIZE, chunkId * CHUNK_SIZE + CHUNK_SIZE );
+                    await axios.post(`${url}/chat/file`, chunk, {
+                        headers : {
+                            "Content-Type" : "application/octet-stream",
+                            "content-length" : chunk.length,
+                            "file-name" : fileName,
+                            ...config.headers,
+                            "group-id" : localStorage.getItem('groupid'),
+                            "user-id" : localStorage.getItem('id')
+                        } 
+                    })
+                    FileUploadPercentage.textContent =`${ Math.round(chunkId * 100 /chunkCount, 0)}% `
+                }
+            }
+            fileReader.readAsArrayBuffer(theFile)
+            fName.value = ""
+            
+        
         }
     }
 
