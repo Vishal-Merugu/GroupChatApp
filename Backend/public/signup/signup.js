@@ -1,4 +1,4 @@
-const url = "http://localhost:3000"
+const url = " https://group-chat-md3u.onrender.com"
 
 
 const Name = document.querySelector("#name");

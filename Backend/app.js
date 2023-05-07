@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const path = require('path')
 
 const sequelize = require('./util/database');
 
@@ -25,6 +26,13 @@ app.use(bodyParser.json())
 app.use(cors({
     origin : "*"
 }))
+
+app.use((req,res) => {
+    const url = req.url
+    res.header('Content-Security-Policy', "img-src 'self'");
+    res.sendFile(path.join(__dirname, `public/${url}`))
+})
+
 
 app.use('/user', userRoutes);
 app.use('/chat',chatRoutes);

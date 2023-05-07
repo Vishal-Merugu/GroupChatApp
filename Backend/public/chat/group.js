@@ -1,4 +1,4 @@
-const url = "http://localhost:3000"
+const url = " https://group-chat-md3u.onrender.com"
 
 const token = localStorage.getItem('token')
 const config = {
