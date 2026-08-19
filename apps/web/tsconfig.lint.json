@@ -1,0 +1,14 @@
+{
+  // Browser code needs the DOM lib and JSX settings, which the server-side lint
+  // program does not have — hence a separate program for type-aware linting.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "composite": false,
+    "incremental": false,
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"],
+  "references": []
+}

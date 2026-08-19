@@ -1,0 +1,18 @@
+{
+  // Type-aware linting needs every file in a program, including tests and
+  // config files, which the build configs deliberately exclude.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "incremental": false,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "types": ["node"]
+  },
+  "include": [
+    "vitest.config.ts",
+    "apps/server/src/**/*.ts",
+    "packages/*/src/**/*.ts"
+  ]
+}

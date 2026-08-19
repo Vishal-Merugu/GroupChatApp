@@ -1,0 +1,32 @@
+{
+  "name": "groupchat-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time group chat with an AI layer — TypeScript rebuild of GroupChatApp",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspace @groupchat/server",
+    "tsc": "tsc --build --verbose",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pr": "npm run tsc && npm run lint && npm run test",
+    "lint": "eslint .",
+    "typecheck": "tsc --build",
+    "dev:web": "npm run dev --workspace @groupchat/web"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "eslint": "^9.39.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^3.2.4"
+  }
+}

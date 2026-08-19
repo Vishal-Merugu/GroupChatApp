@@ -1,0 +1,14 @@
+{
+  "name": "@groupchat/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wire types shared by the server and the React client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  }
+}
